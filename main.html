@@ -35,8 +35,41 @@
   </div>
 
 <script>
-//Your code goes here 
-</script>
+// JavaScript code for click and drag
+  const items = document.querySelector('.items');
+  let isDragging = false;
+  let startX;
+  let scrollLeft;
 
-  </body>
+  // When mouse button is pressed down
+  items.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    startX = e.pageX - items.offsetLeft; // Get the position where the mouse clicked
+    scrollLeft = items.scrollLeft; // Save the current scroll position
+    items.classList.add('active'); // Add active class for visual feedback (e.g., change cursor)
+  });
+
+  // When mouse moves (while dragging)
+  items.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - items.offsetLeft; // Get the mouse position
+    const walk = (x - startX) * 2; // Calculate how far the mouse has moved
+    items.scrollLeft = scrollLeft - walk; // Scroll the container accordingly
+  });
+
+  // When mouse button is released
+  items.addEventListener('mouseup', () => {
+    isDragging = false;
+    items.classList.remove('active'); // Remove active class
+  });
+
+  // For handling when mouse leaves the container (optional)
+  items.addEventListener('mouseleave', () => {
+    isDragging = false;
+    items.classList.remove('active');
+  });
+</script>
+</body>
 </html>
+
